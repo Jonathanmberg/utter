@@ -330,35 +330,53 @@ final class AppModel: ObservableObject {
     }
 
     private static func sampleDocs() -> [PromptDoc] {
-        let script = """
-        Thanks for making the time today, Ana. I'd like us to leave with the scope, the budget and a first deadline agreed.
+        let intro = """
+        Welcome to Utter. This is your teleprompter, sitting right under your camera.
 
-        For scope, let's start with meetings: prepare, record and follow up. Everything else waits for phase two.
+        Press play and the text starts rolling. Read it while you look straight at the person you're talking to.
 
-        On budget, we can stretch to $12k if we start in October. The proposal has the breakdown.
+        Hover over the panel and the text holds still. Move away and it keeps going. Choose Slow, Normal or Fast at the bottom.
 
-        What would you need to see from us to say yes today?
+        Everything here is editable. Click anywhere to type, or paste in your own script.
+
+        Drag the handle at the bottom to see more lines. Click the X to tuck Utter back behind the camera.
+        """
+        let notes = """
+        Notes and keywords
+
+        Use this second page for short keywords instead of a full script.
+
+        Select any words to open the style menu.
+        Text Color changes the color of the words.
+        Box puts a bright box around them.
+        Connect File links an image or PDF. Click the words while presenting and the file pops up.
+
+        Drop files anywhere on the panel to add them.
+        Clear removes the style from your selection. Clear All resets the whole page.
+
+        Shortcuts
+        ⌘B  orange box
+        ⌘↩  play or pause
+        ⌘1 and ⌘2  switch page
+        ⌥⌘P  open or close Utter from anywhere
         """
         func span(_ text: String, in s: String, color: String? = nil, box: String? = nil) -> StyleSpan {
             let r = (s as NSString).range(of: text)
             return StyleSpan(location: r.location, length: r.length, color: color, box: box)
         }
-        let notes = """
-        Thank Ana for her time
-        Scope: meetings only
-        Budget: $12k, start in October
-        Ask for the yes
-
-        Tip: select any words to color them, box them, or connect a file from the Files tab.
-        """
         return [
-            PromptDoc(text: script, spans: [
-                span("scope, the budget and a first deadline", in: script, box: "orange"),
-                span("$12k", in: script, color: "orange", box: "orange"),
+            PromptDoc(text: intro, spans: [
+                span("right under your camera.", in: intro, box: "orange"),
+                span("look straight at", in: intro, box: "green"),
+                span("holds still", in: intro, box: "blue"),
             ]),
             PromptDoc(text: notes, spans: [
-                span("Ask for the yes", in: notes, box: "green"),
-                span("Tip:", in: notes, color: "gray"),
+                span("Notes and keywords", in: notes, color: "orange"),
+                span("Text Color", in: notes, color: "purple"),
+                span("Box", in: notes, box: "yellow"),
+                span("Connect File", in: notes, box: "blue"),
+                span("Shortcuts", in: notes, color: "orange"),
+                span("⌘B", in: notes, box: "orange"),
             ]),
         ]
     }
